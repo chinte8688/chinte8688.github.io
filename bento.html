@@ -800,7 +800,22 @@ function showToast(msg) {
 function checkout() {
   const total = cart.reduce((s, c) => s + c.itemPrice * c.qty, 0);
   const rice = document.getElementById('riceSelect').value;
-  const summary = cart.map(c => `${c.name} x${c.qty}`).join('\n');
+  const now = new Date().toISOString();
+
+  // save each item as separate order record
+  const orders = JSON.parse(localStorage.getItem('mibau_orders') || '[]');
+  cart.forEach(c => {
+    orders.push({
+      time: now,
+      name: c.name,
+      rice: c.rice,
+      qty: c.qty,
+      unitPrice: c.itemPrice,
+      status: '已完成'
+    });
+  });
+  localStorage.setItem('mibau_orders', JSON.stringify(orders));
+
   document.getElementById('modalMsg').innerHTML =
     `主食：${rice}<br><br>` +
     cart.map(c => `${c.name}${c.rice !== '白飯' ? `（改${c.rice}）` : ''} x${c.qty} — $${c.itemPrice * c.qty}`).join('<br>') +
