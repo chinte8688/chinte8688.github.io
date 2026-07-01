@@ -440,6 +440,7 @@
   <h1>米宝弁当</h1>
   <p>MiBo Bento &mdash; ヨネホウベントウ</p>
   <div class="slogan">你要的好吃少負擔的便當都在這裡</div>
+  <div style="font-size:0.65rem;opacity:0.5;margin-top:4px;">v2 - localStorage 已啟用</div>
 </header>
 
 <div class="rice-bar">
@@ -815,6 +816,7 @@ function checkout() {
     });
   });
   localStorage.setItem('mibau_orders', JSON.stringify(orders));
+  console.log('已儲存訂單，共', orders.length, '筆', JSON.parse(localStorage.getItem('mibau_orders')).length, '筆確認');
 
   document.getElementById('modalMsg').innerHTML =
     `主食：${rice}<br><br>` +
